@@ -2,22 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hacemos que el cuerpo ocupe toda la pantalla y centramos el contenido */
-body {
+/* Configuración base para asegurar altura completa */
+html, body {
+  height: 100%;
   margin: 0;
-  min-height: 100vh;
-  background-color: #1e293b; /* Gris oscuro (Slate-800) */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  -webkit-tap-highlight-color: transparent; /* Quita el destello azul al tocar botones en móvil */
+  padding: 0;
+  background-color: #0f172a; /* Slate-900: Fondo oscuro elegante */
+  overflow: hidden; /* Evita scroll en el body, lo maneja la app */
 }
 
-/* En móvil real, quitamos el centrado y ocupamos todo */
-@media (max-width: 768px) {
-  body {
-    align-items: flex-start;
-    background-color: #ffffff; /* En móvil el fondo es blanco */
-  }
+/* Aseguramos que el contenedor de React ocupe todo el espacio */
+#root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
