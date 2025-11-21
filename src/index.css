@@ -7,7 +7,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #0f172a; /* Slate-900: Fondo oscuro elegante */
+  background-color: #ffffff; /* Slate-900: Fondo oscuro elegante */
   overflow: hidden; /* Evita scroll en el body, lo maneja la app */
 }
 
