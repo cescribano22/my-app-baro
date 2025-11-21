@@ -2,24 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { 
   Activity, 
   CloudRain, 
-  Thermometer, 
   BarChart2, 
-  Settings, 
   User, 
   CheckCircle, 
-  AlertCircle, 
   Wind, 
   Brain, 
   ArrowDown,
   Play,
   Pause,
   ShieldCheck,
-  FileText
+  FileText,
+  Settings
 } from 'lucide-react';
 
 // --- COMPONENTES AUXILIARES ---
 
-// Botón Genérico Estilizado
 const Button = ({ children, onClick, variant = 'primary', className = '', disabled = false }) => {
   const baseStyle = "w-full py-4 rounded-xl font-semibold transition-all duration-200 active:scale-95 flex items-center justify-center gap-2";
   const variants = {
@@ -40,7 +37,6 @@ const Button = ({ children, onClick, variant = 'primary', className = '', disabl
   );
 };
 
-// Tarjeta de Contenedor
 const Card = ({ children, className = '' }) => (
   <div className={`bg-white rounded-2xl p-5 shadow-sm border border-slate-100 ${className}`}>
     {children}
@@ -49,7 +45,6 @@ const Card = ({ children, className = '' }) => (
 
 // --- PANTALLAS PRINCIPALES ---
 
-// 1. PANTALLA DE ONBOARDING (CUJ 1)
 const OnboardingScreen = ({ onComplete }) => {
   const [step, setStep] = useState(0);
   const [permissions, setPermissions] = useState({ location: false, health: false, notifications: false });
@@ -77,8 +72,9 @@ const OnboardingScreen = ({ onComplete }) => {
   ];
 
   return (
-    <div className="h-full flex flex-col justify-between p-6 bg-slate-50">
-      <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
+    // IMPORTANTE: 'flex-1' asegura que esta pantalla ocupe todo el espacio disponible dentro del marco
+    <div className="flex-1 flex flex-col justify-between p-6 bg-slate-50 h-full w-full">
+      <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 mt-8">
         <div className="p-8 bg-white rounded-full shadow-xl mb-6 animate-bounce-slow">
           {steps[step].icon || <ShieldCheck size={64} className="text-indigo-500" />}
         </div>
@@ -114,7 +110,7 @@ const OnboardingScreen = ({ onComplete }) => {
         )}
       </div>
 
-      <div className="pt-6">
+      <div className="pt-6 pb-4">
         <div className="flex justify-center gap-2 mb-6">
           {steps.map((_, i) => (
             <div key={i} className={`h-2 w-2 rounded-full ${i === step ? 'bg-blue-600 w-6' : 'bg-slate-300'}`} />
@@ -134,14 +130,13 @@ const OnboardingScreen = ({ onComplete }) => {
   );
 };
 
-// 2. PANTALLA DE REGISTRO DIARIO (CUJ 2 - EMA)
 const EMALogger = ({ onLogComplete, onClose }) => {
   const [painLevel, setPainLevel] = useState(5);
   const [stressLevel, setStressLevel] = useState(3);
   
   return (
-    <div className="fixed inset-0 bg-white z-50 flex flex-col animate-slide-up">
-      <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+    <div className="absolute inset-0 bg-white z-50 flex flex-col animate-slide-up h-full w-full">
+      <div className="p-6 border-b border-slate-100 flex justify-between items-center pt-10 md:pt-6">
         <h2 className="text-xl font-bold text-slate-800">Registro Rápido</h2>
         <button onClick={onClose} className="text-slate-400">Cerrar</button>
       </div>
@@ -204,10 +199,9 @@ const EMALogger = ({ onLogComplete, onClose }) => {
   );
 };
 
-// 3. PANTALLA DE INTERVENCIÓN (CUJ 3 - Alerta de Tormenta)
 const InterventionScreen = ({ weatherData, onFinish }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(180); // 3 minutos
+  const [timeLeft, setTimeLeft] = useState(180);
   
   useEffect(() => {
     let interval;
@@ -226,22 +220,21 @@ const InterventionScreen = ({ weatherData, onFinish }) => {
   };
 
   return (
-    <div className="h-full bg-gradient-to-b from-indigo-900 to-slate-900 text-white flex flex-col p-6">
-      <div className="flex justify-between items-center mb-8">
+    <div className="h-full w-full bg-gradient-to-b from-indigo-900 to-slate-900 text-white flex flex-col p-6">
+      <div className="flex justify-between items-center mb-8 pt-6">
         <button onClick={onFinish} className="text-indigo-200 hover:text-white">Salir</button>
         <div className="px-3 py-1 bg-white/10 rounded-full text-xs font-medium flex items-center gap-2">
           <ArrowDown size={14} className="text-red-300" />
-          Presión cayendo: {weatherData.pressure} hPa
+          Presión: {weatherData.pressure} hPa
         </div>
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center space-y-10">
         <div className="text-center space-y-2">
           <h2 className="text-2xl font-semibold">Escudo de Resiliencia</h2>
-          <p className="text-indigo-200">Imagina tus discos vertebrales hidratados y fuertes frente al cambio de presión.</p>
+          <p className="text-indigo-200">Imagina tus discos vertebrales fuertes.</p>
         </div>
 
-        {/* Visualizador de Biofeedback Simulado */}
         <div className="relative w-64 h-64 flex items-center justify-center">
           <div className={`absolute inset-0 bg-indigo-500/30 rounded-full blur-xl transition-all duration-[4000ms] ease-in-out ${isPlaying ? 'scale-150 opacity-50' : 'scale-100 opacity-20'}`}></div>
           <div className={`w-48 h-48 border-4 border-indigo-400 rounded-full flex items-center justify-center relative transition-all duration-[4000ms] ease-in-out ${isPlaying ? 'scale-110' : 'scale-100'}`}>
@@ -262,7 +255,7 @@ const InterventionScreen = ({ weatherData, onFinish }) => {
         </div>
       </div>
 
-      <div className="pt-8">
+      <div className="pt-8 pb-6">
         <Button 
           onClick={() => setIsPlaying(!isPlaying)}
           className="bg-indigo-500 hover:bg-indigo-400 shadow-indigo-900/50 text-white border-none"
@@ -274,14 +267,13 @@ const InterventionScreen = ({ weatherData, onFinish }) => {
   );
 };
 
-// 4. DASHBOARD PRINCIPAL (Hub Central)
 const Dashboard = ({ phase, onLogPress, logs, weather, onSimulateDrop, onSimulateResult }) => {
   const isPhase1 = phase === 'diagnostic';
 
   return (
-    <div className="h-full bg-slate-50 flex flex-col overflow-hidden">
+    <div className="h-full w-full bg-slate-50 flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="bg-white p-6 pb-4 shadow-sm z-10">
+      <div className="bg-white p-6 pb-4 shadow-sm z-10 pt-10 md:pt-6">
         <div className="flex justify-between items-start mb-4">
           <div>
             <h1 className="text-xl font-bold text-slate-800">Hola, Carlos</h1>
@@ -314,7 +306,7 @@ const Dashboard = ({ phase, onLogPress, logs, weather, onSimulateDrop, onSimulat
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto p-6 space-y-6 pb-20">
         
         {/* Estado del Programa */}
         {isPhase1 ? (
@@ -410,10 +402,9 @@ const Dashboard = ({ phase, onLogPress, logs, weather, onSimulateDrop, onSimulat
   );
 };
 
-// 5. PANTALLA DE RESULTADOS (CUJ 4)
 const ResultScreen = ({ isEligible, onReset }) => {
   return (
-    <div className="h-full bg-white flex flex-col p-6 text-center justify-center animate-fade-in">
+    <div className="h-full w-full bg-white flex flex-col p-6 text-center justify-center animate-fade-in">
       <div className="mb-6 flex justify-center">
         {isEligible ? (
           <div className="bg-green-100 p-6 rounded-full text-green-600 mb-4"><Brain size={64} /></div>
@@ -447,16 +438,14 @@ const ResultScreen = ({ isEligible, onReset }) => {
 };
 
 
-// --- APP PRINCIPAL ---
+// --- APP PRINCIPAL (Con Marco de Teléfono) ---
 
 export default function App() {
-  // State Machine
-  const [view, setView] = useState('onboarding'); // onboarding, dashboard, logging, intervention, result
-  const [phase, setPhase] = useState('diagnostic'); // diagnostic, active
+  const [view, setView] = useState('onboarding');
+  const [phase, setPhase] = useState('diagnostic');
   const [logs, setLogs] = useState([]);
   const [weather, setWeather] = useState({ pressure: 1013, trend: 'stable' });
   
-  // Simulation Handlers
   const handleOnboardingComplete = () => {
     setView('dashboard');
   };
@@ -469,7 +458,6 @@ export default function App() {
 
   const simulatePressureDrop = () => {
     setWeather({ pressure: 998, trend: 'falling' });
-    // En una app real, esto sería una notificación push
     setTimeout(() => {
         alert("⚠️ ALERTA DE PRESIÓN: Se detecta una caída rápida. Tu espalda podría reaccionar.");
         setView('intervention');
@@ -479,13 +467,12 @@ export default function App() {
   const simulatePhenotypeResult = (isEligible) => {
     if (isEligible) {
       setPhase('active');
-      setView('dashboard'); // O mostrar pantalla de éxito
+      setView('dashboard');
     } else {
       setView('result_ineligible');
     }
   };
 
-  // Render Router
   const renderView = () => {
     switch(view) {
       case 'onboarding':
@@ -503,7 +490,7 @@ export default function App() {
         return <EMALogger onLogComplete={handleLogSave} onClose={() => setView('dashboard')} />;
       case 'intervention':
         return <InterventionScreen weatherData={weather} onFinish={() => {
-          setWeather({ pressure: 1002, trend: 'stable' }); // Resetear clima tras intervención
+          setWeather({ pressure: 1002, trend: 'stable' });
           setView('dashboard');
         }} />;
       case 'result_ineligible':
@@ -517,19 +504,29 @@ export default function App() {
   };
 
   return (
-    /* CONTENEDOR PRINCIPAL ("El Teléfono")
-       - En móvil (base): w-full, h-screen (pantalla completa), sin bordes.
-       - En escritorio (md): ancho fijo (max-w-md), altura fija, bordes redondeados, sombra fuerte.
-    */
-    <div className="w-full h-[100dvh] md:h-[850px] md:max-w-[400px] bg-white md:rounded-[3rem] shadow-2xl overflow-hidden relative font-sans text-slate-900 border-0 md:border-[8px] md:border-slate-900 flex flex-col">
+    // CONTENEDOR GLOBAL (Centrado en pantalla)
+    <div className="flex items-center justify-center min-h-screen w-full p-0 md:p-4">
       
-      {/* Opcional: Simulación de la "Muesca/Notch" del iPhone solo en escritorio */}
-      <div className="hidden md:block absolute top-0 left-1/2 transform -translate-x-1/2 w-1/2 h-7 bg-slate-900 rounded-b-xl z-50"></div>
+      {/* MARCO DEL TELÉFONO */}
+      <div className="
+        w-full h-[100dvh]                 
+        md:h-[850px] md:max-w-[400px]     
+        md:rounded-[3rem]                 
+        md:border-[8px] md:border-slate-900 
+        bg-white                          
+        shadow-2xl 
+        overflow-hidden 
+        relative 
+        flex flex-col
+      ">
+        
+        {/* NOTCH / MUESCA (Solo en PC) */}
+        <div className="hidden md:block absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-slate-900 rounded-b-2xl z-50 pointer-events-none"></div>
 
-      {/* Aquí se renderiza la vista actual */}
-      {renderView()}
-    
+        {/* CONTENIDO DE LA APP */}
+        {renderView()}
+      
+      </div>
     </div>
   );
-
 }
