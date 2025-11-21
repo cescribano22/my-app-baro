@@ -517,8 +517,19 @@ export default function App() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto h-[600px] md:h-[800px] bg-white shadow-2xl overflow-hidden relative font-sans text-slate-900 border border-slate-200 md:rounded-[3rem]">
+    /* CONTENEDOR PRINCIPAL ("El Teléfono")
+       - En móvil (base): w-full, h-screen (pantalla completa), sin bordes.
+       - En escritorio (md): ancho fijo (max-w-md), altura fija, bordes redondeados, sombra fuerte.
+    */
+    <div className="w-full h-[100dvh] md:h-[850px] md:max-w-[400px] bg-white md:rounded-[3rem] shadow-2xl overflow-hidden relative font-sans text-slate-900 border-0 md:border-[8px] md:border-slate-900 flex flex-col">
+      
+      {/* Opcional: Simulación de la "Muesca/Notch" del iPhone solo en escritorio */}
+      <div className="hidden md:block absolute top-0 left-1/2 transform -translate-x-1/2 w-1/2 h-7 bg-slate-900 rounded-b-xl z-50"></div>
+
+      {/* Aquí se renderiza la vista actual */}
       {renderView()}
+    
     </div>
   );
+
 }

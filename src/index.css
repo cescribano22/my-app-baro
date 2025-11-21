@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilos adicionales si fueran necesarios */
+/* Hacemos que el cuerpo ocupe toda la pantalla y centramos el contenido */
 body {
-  background-color: #f8fafc;
+  margin: 0;
+  min-height: 100vh;
+  background-color: #1e293b; /* Gris oscuro (Slate-800) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent; /* Quita el destello azul al tocar botones en móvil */
+}
+
+/* En móvil real, quitamos el centrado y ocupamos todo */
+@media (max-width: 768px) {
+  body {
+    align-items: flex-start;
+    background-color: #ffffff; /* En móvil el fondo es blanco */
+  }
 }
