@@ -2,19 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { 
   Activity, 
   CloudRain, 
-  Thermometer, 
   BarChart2, 
-  Settings, 
   User, 
   CheckCircle, 
-  AlertCircle, 
   Wind, 
   Brain, 
   ArrowDown,
   Play,
   Pause,
   ShieldCheck,
-  FileText
+  FileText,
+  Settings
 } from 'lucide-react';
 
 // --- COMPONENTES AUXILIARES ---
